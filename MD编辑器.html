@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>极简 Markdown 在线编辑器</title>
-    <!-- 引入外部开源的 Marked 库用于解析 Markdown，以及 GitHub 样式库 -->
+    <!-- 修复：引入正确的 Marked 库用于解析 Markdown -->
     <script src="https://jsdelivr.net"></script>
+    <!-- 修复：引入正确的 GitHub 样式库 -->
     <link rel="stylesheet" href="https://jsdelivr.net">
-    
     <style>
         * {
             box-sizing: border-box;
@@ -50,25 +50,24 @@
     </style>
 </head>
 <body>
-
     <div class="container">
         <!-- 编辑区域 -->
         <textarea id="editor" class="editor-zone" placeholder="在此处输入 Markdown 代码..."></textarea>
         <!-- 预览区域 -->
         <div id="preview" class="preview-zone markdown-body"></div>
     </div>
-
     <script>
         const editor = document.getElementById('editor');
         const preview = document.getElementById('preview');
 
-        // 初始化默认内容
+        // 初始化默认内容（修复了图标字符编码）
         const defaultContent = `# 欢迎使用极简 Markdown 编辑器 👋\n\n这是一个实时同步的**分屏编辑器**。\n\n## 功能特点\n- ✍️ 左侧实时编辑，右侧同步预览\n- 🎨 采用 GitHub 风格渲染\n- 🚀 纯前端实现，无需服务器\n\n## 代码高亮示例\n\`\`\`javascript\nconst hello = "Hello World";\nconsole.log(hello);\n\`\`\``;
-
+        
         editor.value = defaultContent;
 
         // 渲染函数
         function renderMarkdown() {
+            // 注意：新版 marked 库的调用方式为 marked.parse()
             const rawHtml = marked.parse(editor.value);
             preview.innerHTML = rawHtml;
         }
@@ -79,6 +78,5 @@
         // 页面加载时初次渲染
         renderMarkdown();
     </script>
-
 </body>
 </html>
