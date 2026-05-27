@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>极简 Markdown 在线编辑器</title>
+    <!-- 引入外部开源的 Marked 库用于解析 Markdown，以及 GitHub 样式库 -->
+    <script src="https://jsdelivr.net"></script>
+    <link rel="stylesheet" href="https://jsdelivr.net">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body, html {
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            height: 100%;
+            width: 100%;
+        }
+        /* 左侧输入框样式 */
+        .editor-zone {
+            flex: 1;
+            height: 100%;
+            border: none;
+            border-right: 1px solid #e1e4e8;
+            padding: 20px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 16px;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+            background-color: #f6f8fa;
+            color: #24292e;
+        }
+        /* 右侧预览区样式 */
+        .preview-zone {
+            flex: 1;
+            height: 100%;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 编辑区域 -->
+        <textarea id="editor" class="editor-zone" placeholder="在此处输入 Markdown 代码..."></textarea>
+        <!-- 预览区域 -->
+        <div id="preview" class="preview-zone markdown-body"></div>
+    </div>
+
+    <script>
+        const editor = document.getElementById('editor');
+        const preview = document.getElementById('preview');
+
+        // 初始化默认内容
+        const defaultContent = `# 欢迎使用极简 Markdown 编辑器 👋\n\n这是一个实时同步的**分屏编辑器**。\n\n## 功能特点\n- ✍️ 左侧实时编辑，右侧同步预览\n- 🎨 采用 GitHub 风格渲染\n- 🚀 纯前端实现，无需服务器\n\n## 代码高亮示例\n\`\`\`javascript\nconst hello = "Hello World";\nconsole.log(hello);\n\`\`\``;
+
+        editor.value = defaultContent;
+
+        // 渲染函数
+        function renderMarkdown() {
+            const rawHtml = marked.parse(editor.value);
+            preview.innerHTML = rawHtml;
+        }
+
+        // 监听输入事件，实现实时渲染
+        editor.addEventListener('input', renderMarkdown);
+
+        // 页面加载时初次渲染
+        renderMarkdown();
+    </script>
+
+</body>
+</html>
