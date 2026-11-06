@@ -77,14 +77,14 @@ jobs:
               for name, rx in patterns:
                   m = rx.search(text)
                   if m:
-                      findings.append((current, newline, name, mask(m.group(0)))
+                      findings.append((current, newline, name, mask(m.group(0))))
               newline += 1
 
           for msg in git("log", "--format=%B", f"{base}..{head}").splitlines():
               for name, rx in patterns:
                   m = rx.search(msg)
                   if m:
-                      findings.append(("<commit message>", 0, name, mask(m.group(0)))
+                      findings.append(("<commit message>", 0, name, mask(m.group(0))))
 
           if findings:
               print("Potential PII detected in new commits:")
